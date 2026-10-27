@@ -10,7 +10,7 @@ let game = {
   },
   preload(callback) {
     let loaded = 0;
-    let required = Object.keys(this.sprites).lenght;
+    let required = Object.keys(this.sprites).length;
 
     for (let key in this.sprites) {
       this.sprites[key] = new Image();
