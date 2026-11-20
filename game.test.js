@@ -76,3 +76,40 @@ test("Palli liikumine", game => {
     equal(game.ball.x, 322);
     equal(game.ball.y, 277);
 });
+
+//5. Nullkiirusega pall jääb paigale.
+test("Paigal olev pall", game => {
+    game.ball.move();
+    equal(game.ball.x, 320);
+    equal(game.ball.y, 280);
+});
+
+//ET: 6. plokid põrkuvad.
+test("Kokkupõrge", game => {
+    const block = { x: 330, y:290, width: 60, height: 20 };
+    equal(game.ball.collide(block), true);
+});
+
+//7. Uksteist kaugel olevad plokid ei põrgu 
+test("Kokkupõrget pole", game => {
+    const block = { x:10, y: 10, width: 60, height: 20 };
+    equal(game.ball.collide(block), false); 
+});
+
+// 8. Ainult servade puudutamine ei ole veel kattumine.
+test("Servade ouudutus", game => {
+    const block = { x:340, y: 28, width: 60, height: 20 };
+    equal(game.ball.collide(block), false);
+});
+
+//9. Kokkupõrke kontroll arvestab palli järgmist asukoht.
+test("Jargmine asukoht", game => {
+    const block = { x:340, y: 28, width: 60, height: 20 };
+    game.ball.dx = 3;
+    equal(game.ball.collide(block), false);
+});
+
+10. Plokilt põrkamine muudab vertikaalset suunda ja eemaldab ploki mängust.
+test("Plokilt porkamine", game => {
+
+});
