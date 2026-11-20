@@ -11,6 +11,7 @@ let game = {
   platform: null,
   ball: null,
   blocks: [],
+  score: 0,
   rows: 4,
   cols: 8,
   width: 640,
@@ -55,7 +56,6 @@ let game = {
       this.sprites[key].addEventListener("load", onImageLoad); 
     }
 },
-
 create() {
     for (let row = 0; row < this.rows; row++) {
         for (let col = 0; col < this.cols; col++) {
@@ -77,10 +77,18 @@ update() {
   this.platform.move();
   this.ball.move();
 },
+addScore() {
+  ++this.score;
+
+  if (this.score >= this.blocks.length) {
+    this.end("Вы победили");
+  }
+},
 collideBlocks() {
   for (let block of this.blocks) {
     if (block.active && this.ball.collide(block)) {
       this.ball.bumpBlock(block);
+      this.addScore();
     }
   }
 },
@@ -90,11 +98,13 @@ collidePlatform() {
   }
 },
   run() {
+    if (this.running) {
     window.requestAnimationFrame(() => {
       this.update();
       this.render();
       this.run();
     });
+    }
   },
   render() {
     this.ctx.clearRect(0, 0, this.width, this.height);
@@ -117,6 +127,11 @@ collidePlatform() {
       this.create();
       this.run();
     });
+  },
+  end(massage) {
+    this.runnung = false;
+    alert(massage);
+    window.location.reload();
   },
   random(min,max) {
     return Math.floor(Math.random() * (max - min + 1) + min);
@@ -179,9 +194,7 @@ game.ball = {
             this.y = 0;
             this.dy = this.velocity;
           } else if (ballBottom > worldBottom) {
-            game.running = false;
-            alert("Вы проиграли");
-            window.location.reload();
+            game.end("Вы проиграли");
           }
         
         },
