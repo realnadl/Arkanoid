@@ -6,6 +6,7 @@ const KEYS = {
 };
 
 let game = {
+  running: true,
   ctx: null,
   platform: null,
   ball: null,
@@ -178,7 +179,9 @@ game.ball = {
             this.y = 0;
             this.dy = this.velocity;
           } else if (ballBottom > worldBottom) {
-            console.log('game over');
+            game.running = false;
+            alert("Вы проиграли");
+            window.location.reload();
           }
         
         },
